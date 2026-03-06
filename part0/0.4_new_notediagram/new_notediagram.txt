@@ -1,0 +1,39 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User writes and clicks on save
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    server-->>browser: HTTP 302 Found (redirection a /notes)
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file (or in this case HTTP 304 not modified from cache)
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file (or in this case HTTP 304 not modified from cache)
+    deactivate server
+
+    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser:[ .... {"content": "world hello","date": "2026-03-05T21:41:30.766Z"} ]
+    deactivate server
+
+    Note right of browser: The browser executes the callback function that renders the notes
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/favicon.ico
+    activate server
+    server-->>browser: 404 Not Found
+    deactivate server
