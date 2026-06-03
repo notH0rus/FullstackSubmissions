@@ -23,14 +23,23 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <>
       <h1>Statistics</h1>
-      good: {good} <br></br>
-      neutral: {neutral} <br></br>
-      bad: {bad} <br></br>
-      all: {all} <br></br>
-      average: {(good - bad) / all} <br></br>
-      positive: {good * 100 / all} %
+      <StatisticLine label={"good"} value={good} />
+      <StatisticLine label={"neutral"} value={neutral} />
+      <StatisticLine label={"bad"} value={bad} />
+      <StatisticLine label={"all"} value={all} />
+      <StatisticLine label={"average"} value={(good - bad) / all} />
+      <StatisticLine label={"positive"} value={good * 100 / all} sign="%" />
     </>
   )
 }
+
+const StatisticLine = (props) => {
+  return (
+    <>
+      {props.label} : {props.value} {props.sign}<br></br>
+    </>
+  )
+}
+
 
 export default App
